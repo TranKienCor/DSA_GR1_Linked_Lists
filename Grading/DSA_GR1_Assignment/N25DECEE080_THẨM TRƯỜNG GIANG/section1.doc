@@ -1,0 +1,100 @@
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+<h1>Assignment & Examination Paper</h1>
+
+<h2>Section 1 - Recall (1.0 point)</h2>
+<table>
+  <tr>
+    <th>Linked List Variation & Operation</th>
+    <th>Best</th>
+    <th>Average</th>
+    <th>Worst</th>
+    <th>Space</th>
+    <th>Why (Theoretical Justification)</th>
+  </tr>
+  <tr>
+    <td>Singly Linked List<br>(Insert Head)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>The head pointer is directly accessible. We just need to create a new node, point its next to the current head, and update the head pointer. No traversal is required.</td>
+  </tr>
+  <tr>
+    <td>Singly Linked List<br>(Delete Tail)</td>
+    <td>O(N)</td>
+    <td>O(N)</td>
+    <td>O(N)</td>
+    <td>O(1)</td>
+    <td>Since there is no tail pointer with a previous link, we must traverse the entire list from the head to find the second-to-last node in order to update its next pointer to null.</td>
+  </tr>
+  <tr>
+    <td>Doubly Linked List<br>(Delete Given Node Pointer)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>Given the direct pointer to the node, we can immediately access its previous and next nodes. Deletion only requires updating adjacent nodes' pointers (prev's next and next's prev) and deallocating the current node.</td>
+  </tr>
+  <tr>
+    <td>Circular Linked List<br>(Insert Head with TailPtr)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>O(1)</td>
+    <td>In a circular list with a tail pointer, the head is always at <code>tail-&gt;next</code>. We insert the new node by updating the new node's next to <code>tail-&gt;next</code>, and <code>tail-&gt;next</code> to the new node, avoiding full traversal.</td>
+  </tr>
+  <tr>
+    <td>Sorted Singly Linked List<br>(Search & Insert)</td>
+    <td>O(1)</td>
+    <td>O(N)</td>
+    <td>O(N)</td>
+    <td>O(1)</td>
+    <td>To insert an element while maintaining sorted order, we must search for the correct position by traversing the list sequentially. The search inherently takes O(N) time in the average and worst case.</td>
+  </tr>
+</table>
+
+<h2>Section 4 - Written Analysis: Singly vs. Doubly Linked List Traversal</h2>
+<p><b>Explain why bidirectional traversal in a Doubly Linked List reduces average search comparisons from n/2 down to n/4 when index or target proximity to head/tail is known, whereas Singly Linked List is strictly constrained to forward traversal.</b></p>
+<p>
+In a Doubly Linked List, each node maintains two pointers: one to the next node and one to the previous node. This structure allows traversal to occur from either the head or the tail. By calculating whether the target index (or estimated position based on value in a sorted list) is closer to the head or the tail, the search algorithm can initiate traversal from the nearest end. <br><br>
+Because the maximum traversal distance is halved (you never have to cross the midpoint from either end), the worst-case traversal drops from N to N/2. Assuming a uniform random distribution of search queries, the average traversal distance over the half-length of the list becomes (N/2)/2 = N/4. In contrast, a Singly Linked List lacks previous pointers, meaning traversal can only proceed forward from the head. Regardless of the target's position, the search must always start at the beginning, leading to an average traversal distance of N/2.
+</p>
+
+<h2>Section 5 - Open/Design: Music Player Playlist System (2.0 points)</h2>
+
+<h3>1. Data Structure Choice & Justification</h3>
+<p><b>Proposed Data Structure: Circular Doubly Linked List</b></p>
+<p><b>Justification:</b> A Circular Doubly Linked List is the ideal data structure for this use case. <br>
+- <b>Why not a Singly Linked List?</b> A singly linked list only allows forward traversal, making the "Previous Track" operation inefficient (O(N) time), as we would have to traverse from the head to find the preceding node.<br>
+- <b>Why not a standard Doubly Linked List?</b> A standard doubly linked list ends with <code>nullptr</code> at both the head and tail. To implement "Repeat All" looping, an O(N) traversal or special edge-case handling would be needed to wrap around from the tail back to the head (or vice versa).<br>
+A Circular Doubly Linked List solves both issues by connecting the tail's next pointer to the head, and the head's previous pointer to the tail, enabling seamless O(1) backward navigation and infinite looping without additional bounds checking.</p>
+
+<h3>2. Phase 1: Track Navigation (nextSong and previousSong)</h3>
+<p><b>Workflow:</b> We maintain an <code>active_node</code> pointer pointing to the currently playing song.</p>
+<ul>
+  <li><b>nextSong():</b> The player simply updates the pointer: <code>active_node = active_node-&gt;next;</code>. Due to the circular nature, if the active track is the last song (tail), its <code>next</code> pointer naturally points to the first song (head). This guarantees O(1) continuous forward navigation.</li>
+  <li><b>previousSong():</b> The player updates the pointer: <code>active_node = active_node-&gt;prev;</code>. If the active track is the first song (head), its <code>prev</code> pointer links back to the last song (tail), enabling O(1) continuous backward navigation.</li>
+</ul>
+
+<h3>3. Phase 2: Playlist Management & Seamless Looping</h3>
+<p><b>Workflow:</b></p>
+<ul>
+  <li><b>Adding a track:</b> To add a track at any position (e.g., after node A, before node B), we create the new node C, and update pointers: <code>C-&gt;next = B</code>, <code>C-&gt;prev = A</code>, <code>A-&gt;next = C</code>, <code>B-&gt;prev = C</code>. This takes O(1) time once the insertion point is found.</li>
+  <li><b>Deleting a track:</b> To delete node C (between A and B), we update pointers: <code>A-&gt;next = C-&gt;next (which is B)</code> and <code>B-&gt;prev = C-&gt;prev (which is A)</code>, then safely deallocate C. This takes O(1) time. If C was the head or tail, we also update the global <code>head</code> or <code>tail</code> pointers accordingly.</li>
+  <li><b>Infinite Repeat All Looping:</b> The system inherently supports "Repeat All" because of its circular links (<code>head-&gt;prev = tail</code> and <code>tail-&gt;next = head</code>). There is no need for bounds checking or manually resetting pointers to the start of the list. Navigation naturally wraps around seamlessly.</li>
+</ul>
+
+</body>
+</html>
