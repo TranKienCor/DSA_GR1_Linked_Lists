@@ -1,0 +1,24 @@
+3.1 Singly Linked List (SLL) — Syllabus §4.1.1
+
+• 1. Syllabus Placement: Chapter 4, Section §4.1.1 (Cormen et al. §10.2, pp. 236–240; Sedgewick §1.3, pp. 142–146).
+
+
+• 2. Learning Outcomes Served: Primary: LO1 (Memory & Pointer Principles) and LO2 (Complexity Analysis).
+
+
+• 3. Motivation & Problem Solved: 
+
+	Static and dynamically allocated contiguous arrays require fixed pre-allocated blocks of physical memory. Inserting or deleting an element at the beginning or middle of an array requires shifting N elements, incurring an unacceptable O(N) time cost. Furthermore, resizing an array requires allocating a new contiguous block and copying all data, which fails when heap memory is fragmented. Singly Linked Lists solve this by storing data in independent nodes allocated dynamically anywhere in memory, allowing constant-time O(1) head insertion/deletion without array copying.
+
+• 4. Related Structures: 
+	
+	• Built upon: Raw pointers/memory addresses and self-referential Node records.
+	• Foundation for: Stacks (push/pop at head in O(1)), Queues (with tail pointer), and Hash Table Collision Resolution (Separate Chaining).
+
+
+• 5. When it is the WRONG Choice (Anti-Pattern):
+	
+	A Singly Linked List is the wrong choice when an application requires fast random access by numerical index (e.g., retrieving the K-th element A[i] in O(1) time), or when hardware CPU cache locality is paramount. In an SLL, accessing the K-th node requires traversing K pointer links sequentially in O(N) time, and scattered heap nodes cause frequent CPU cache misses.
+
+
+--> SLL SUMMARY: Singly Linked Lists trade O(1) random access capability for O(1) head insertion/deletion flexibility and zero memory waste from unused array capacity allocation.

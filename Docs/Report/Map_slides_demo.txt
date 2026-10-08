@@ -1,0 +1,22 @@
+To understand the structural position of Group 1 data structures within computer science, the diagram below illustrates how raw memory abstractions evolve into Group 1 structures, which in turn power high-level application data types:
+
+
+[Level 0: Raw Memory] ──> Primitive Pointers & Heap Space
+                               │
+                               ▼
+[Level 1: Core Node]   ──> Self-Referential Struct { Data, Pointer(s) }
+                               │
+         ┌─────────────────────┼─────────────────────┐
+         ▼                     ▼                     ▼
+[§4.1.1 Singly Linked]  [§4.1.2 Doubly Linked]  [§4.1.3 Circular Linked]
+         │                     │                     │
+         └─────────────────────┼─────────────────────┘
+                               ▼
+                       [§4.1.4 Sorted Variant]
+                               │
+         ┌─────────────────────┼─────────────────────┐
+         ▼                     ▼                     ▼
+[Level 2: Derived ADTs] Stacks, Queues, Deques, Ring Buffers, LRU Cache
+         │                     │                     │
+         ▼                     ▼                     ▼
+[Level 3: Applications] OS Schedulers, Text Buffers, Network Routers

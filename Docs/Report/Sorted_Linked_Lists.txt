@@ -1,0 +1,26 @@
+3.4 Sorted Linked List — Syllabus §4.1.4
+
+
+• 1. Syllabus Placement: Chapter 4, Section §4.1.4 (Cormen et al. §10.2, p. 236; Sedgewick §3.1, p. 374).
+
+
+• 2. Learning Outcomes Served: Primary: LO2 (Algorithmic Optimizations) and LO3 (Real-Time Ordering).
+
+
+• 3. Motivation & Problem Solved: 
+
+	In an unsorted list, searching for a non-existent element requires traversing all N nodes to the end (O(N) worst-case). Furthermore, maintaining sorted order by repeatedly invoking full list sorting algorithms (like MergeSort) after every insertion incurs O(N log N) performance hits. Sorted Linked Lists solve this by enforcing continuous sorted invariant during insertion, placing new elements directly into their correct numerical position and enabling early search termination when a node value exceeds the search key.
+
+
+• 4. Related Structures: 
+
+	• Built upon: Singly or Doubly Linked List with conditional order-preserving insertion logic.
+	• Foundation for: List-based Priority Queues, Symbol Tables (Sequential Search ST), and Ordered Event Scheduling Queues.
+
+
+• 5. When it is the WRONG Choice (Anti-Pattern): 
+	
+	A Sorted Linked List is the wrong choice for large-scale datasets (N >= 10,000) undergoing frequent insertions. Insertion in a sorted linked list requires sequential traversal to find the correct insertion position, taking O(N) time per insertion. For high-volume dynamic ordered data, Balanced Search Trees (AVL/Red-Black Trees) or Heaps are vastly superior, providing O(log N) insertion bounds.
+
+
+--> SORTED LIST SUMMARY: Sorted Linked Lists maintain continuous ordering for real-time applications and enable early search termination, but suffer from O(N) insertion traversal costs.

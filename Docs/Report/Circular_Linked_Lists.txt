@@ -1,0 +1,26 @@
+3.3 Circular Linked List (CLL) — Syllabus §4.1.3
+
+
+• 1. Syllabus Placement: Chapter 4, Section §4.1.3 (Cormen et al. §10.2, pp. 238–240; Sedgewick §1.3, p. 165).
+
+
+• 2. Learning Outcomes Served: Primary: LO2 (Algorithm Execution) and LO3 (Applied Systems).
+
+
+• 3. Motivation & Problem Solved: 
+	
+	Standard linear lists terminate with a NULL pointer at the tail. Applications that process streaming, cyclic, or repeating data (such as CPU time-sharing or audio playback) require resetting pointers back to the head upon reaching NULL, adding conditional branch overhead and complexity. Circular Linked Lists eliminate NULL pointers by linking the tail node's 'next' pointer directly back to the head node, forming a continuous ring that seamlessly supports endless cyclic iteration.
+
+
+• 4. Related Structures: 
+
+	• Built upon: Singly or Doubly Linked List structures with loop-closing link logic.
+	• Foundation for: Ring Buffers (Audio/Network streaming), CPU Round-Robin Schedulers, Multiplayer Turn Systems, and Circular Queues.
+
+
+• 5. When it is the WRONG Choice (Anti-Pattern):
+	
+	A Circular Linked List is the wrong choice for linear, finite datasets that require clear start and end boundaries (such as a standard single-pass search query). Without explicit loop termination logic based on node identity or iteration counting, algorithms risk falling into fatal infinite loops.
+
+
+--> CLL SUMMARY: Circular Linked Lists provide seamless, boundary-free looping ideal for cyclic process scheduling, but require careful termination checks to prevent infinite loops.
